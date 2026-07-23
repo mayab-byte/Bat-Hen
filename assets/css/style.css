@@ -99,8 +99,8 @@ header{position:sticky; top:0; z-index:100; background:rgba(13,36,41,0.92); back
 .skip-link:focus{top:12px;}
 .nav-wrap{max-width:var(--container); margin:0 auto; padding:14px 24px; display:flex; align-items:center; justify-content:space-between; gap:20px; min-height:var(--header-h);}
 .logo{display:flex; align-items:center;}
-.logo-img{height:54px; width:auto; display:block;}
-@media (max-width:480px){ .logo-img{height:44px;} }
+.logo-img{height:44px; width:auto; display:block;}
+@media (max-width:480px){ .logo-img{height:36px;} }
 nav.links{display:flex; align-items:center; gap:28px;}
 nav.links a{font-size:15px; font-weight:500; color:var(--cream); opacity:.85; transition:opacity .2s, color .2s; position:relative;}
 nav.links a:hover{opacity:1; color:var(--gold-light);}
