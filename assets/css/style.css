@@ -247,10 +247,12 @@ nav.links a:hover{opacity:1; color:var(--gold-light);}
 
 /* ---------- Banks (placeholder) ---------- */
 .banks{background:var(--cream);}
-.banks-note{font-size:14px; color:var(--muted-on-light); margin-bottom:22px; text-align:center;}
-.banks-row{display:grid; grid-template-columns:repeat(6,1fr); gap:16px;}
-@media (max-width:760px){ .banks-row{grid-template-columns:repeat(3,1fr);} }
-.bank-slot{background:var(--white); border:1px dashed rgba(13,36,41,0.22); border-radius:10px; height:76px; display:flex; align-items:center; justify-content:center; color:var(--muted-on-light); font-size:13px; font-weight:500;}
+.banks-row{display:grid; grid-template-columns:repeat(7,1fr); gap:16px;}
+@media (max-width:900px){ .banks-row{grid-template-columns:repeat(4,1fr);} }
+@media (max-width:560px){ .banks-row{grid-template-columns:repeat(3,1fr);} }
+.bank-slot{background:var(--white); border:1px solid rgba(13,36,41,0.08); box-shadow:var(--shadow); border-radius:10px; height:76px; display:flex; align-items:center; justify-content:center; padding:12px; transition:transform .2s var(--ease), box-shadow .2s var(--ease);}
+.bank-slot:hover{transform:translateY(-3px); box-shadow:var(--shadow-lift);}
+.bank-slot img{max-width:100%; max-height:100%; object-fit:contain;}
 
 /* ---------- Contact ---------- */
 .contact{background:var(--dark); color:var(--cream); overflow:hidden; position:relative;}
