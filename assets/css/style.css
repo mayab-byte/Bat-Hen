@@ -73,10 +73,14 @@ p{font-size:17px; font-weight:300; line-height:1.75; margin:0;}
 
 /* ---------- Buttons ---------- */
 .btn{
-  display:inline-flex; align-items:center; gap:10px;
+  display:inline-flex; align-items:center; justify-content:center; gap:10px;
   padding:16px 34px; border-radius:9px; font-weight:700; font-size:16px;
-  cursor:pointer; border:1.5px solid transparent; white-space:nowrap;
+  cursor:pointer; border:1.5px solid transparent; white-space:nowrap; max-width:100%;
   transition:background .2s var(--ease), color .2s var(--ease), border-color .2s var(--ease), transform .15s var(--ease);
+}
+@media (max-width:480px){
+  .btn{white-space:normal; text-align:center; padding:14px 22px; font-size:15px;}
+  .hero-ctas{flex-direction:column; align-items:stretch;}
 }
 .btn:hover{transform:translateY(-2px);}
 .btn-primary{background:var(--grad); color:var(--dark);}
@@ -122,6 +126,22 @@ nav.links a:hover{opacity:1; color:var(--gold-light);}
 .hero-overlay{position:absolute; inset:0; background:linear-gradient(100deg, rgba(7,22,25,0.94) 10%, rgba(13,36,41,0.82) 45%, rgba(13,36,41,0.55) 100%);}
 .hero .container{position:relative; z-index:2; width:100%; padding-top:64px; padding-bottom:64px;}
 .hero-inner{max-width:740px;}
+.hero-portrait{position:absolute; z-index:1; bottom:0; left:2%; height:94%; display:flex; align-items:flex-end; pointer-events:none;}
+.hero-portrait::before{
+  content:""; position:absolute; bottom:8%; right:-10%; width:85%; aspect-ratio:1; border-radius:50%;
+  background:radial-gradient(circle, rgba(193,165,117,0.30), rgba(193,165,117,0) 68%);
+}
+.hero-portrait img{position:relative; height:100%; width:auto; filter:drop-shadow(0 30px 40px rgba(0,0,0,0.45));}
+@media (max-width:1180px){ .hero-portrait{height:80%;} }
+@media (max-width:900px){
+  .hero{flex-direction:column; padding-top:36px;}
+  .hero-portrait{
+    position:static; height:auto; margin-bottom:8px; justify-content:center; width:100%;
+  }
+  .hero-portrait::before{right:auto; left:50%; transform:translateX(-50%); bottom:0;}
+  .hero-portrait img{height:280px;}
+}
+@media (max-width:480px){ .hero-portrait img{height:220px;} }
 .hero h1{color:var(--white); margin-top:16px;}
 .hero h1 em{font-style:normal; background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent;}
 .hero p{color:var(--muted-on-dark); font-size:19.5px; margin-top:22px; max-width:600px;}
@@ -177,11 +197,18 @@ nav.links a:hover{opacity:1; color:var(--gold-light);}
 @media (min-width:768px){ .svc-track{height:78vh; will-change:transform;} }
 @media (max-width:767px){ .svc-track{flex-direction:column; gap:20px; padding:20px 20px 8px;} }
 .svc-card{
-  display:block; position:relative; flex:0 0 100%; border-radius:22px; overflow:hidden;
-  box-shadow:0 20px 50px rgba(0,0,0,0.35); color:#fff;
+  display:block; position:relative; flex:0 0 100%; color:#fff;
 }
-@media (min-width:768px){ .svc-card{margin:0 4vw;} }
 @media (max-width:767px){ .svc-card{flex:none; min-height:400px;} }
+/* .svc-frame is the visual card (inset from the slot edges on desktop so the
+   pitch the JS computes — one slot = 100% of the sticky viewport — stays
+   exact; the inset only affects what's drawn, never the slot's own width). */
+.svc-frame{
+  position:relative; height:100%; border-radius:22px; overflow:hidden;
+  box-shadow:0 20px 50px rgba(0,0,0,0.35);
+}
+@media (min-width:768px){ .svc-frame{margin:0 4vw;} }
+@media (max-width:767px){ .svc-frame{position:absolute; inset:0; height:auto;} }
 .svc-bg{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform .7s var(--ease);}
 .svc-card:hover .svc-bg{transform:scale(1.05);}
 .svc-scrim{position:absolute; inset:0; background:linear-gradient(to top, rgba(7,22,25,0.94) 0%, rgba(7,22,25,0.55) 40%, rgba(7,22,25,0.08) 100%);}
@@ -208,7 +235,11 @@ nav.links a:hover{opacity:1; color:var(--gold-light);}
 .reasons{display:grid; gap:32px; grid-template-columns:repeat(4,1fr); margin-top:8px;}
 @media (max-width:960px){ .reasons{grid-template-columns:repeat(2,1fr);} }
 @media (max-width:560px){ .reasons{grid-template-columns:1fr;} }
-.reason .r-icon{width:44px; height:44px; border-radius:10px; background:rgba(193,165,117,0.14); display:flex; align-items:center; justify-content:center; color:var(--gold-light); margin-bottom:16px;}
+.reason .r-icon{
+  width:52px; height:52px; border-radius:50%; background:rgba(193,165,117,0.10);
+  border:1.5px solid rgba(193,165,117,0.4); display:flex; align-items:center; justify-content:center;
+  color:var(--gold-light); margin-bottom:18px; box-shadow:0 6px 16px rgba(0,0,0,0.2);
+}
 .reason h4{color:var(--white);}
 .reason p{color:var(--muted-on-dark); font-size:15px; margin-top:8px;}
 
