@@ -171,7 +171,7 @@ nav.links a:hover{opacity:1; color:var(--gold-light);}
 @media (min-width:768px){ .svc-track{height:78vh; will-change:transform;} }
 @media (max-width:767px){ .svc-track{flex-direction:column; gap:20px; padding:20px 20px 8px;} }
 .svc-card{
-  position:relative; flex:0 0 100%; border-radius:22px; overflow:hidden;
+  display:block; position:relative; flex:0 0 100%; border-radius:22px; overflow:hidden;
   box-shadow:0 20px 50px rgba(0,0,0,0.35); color:#fff;
 }
 @media (min-width:768px){ .svc-card{margin:0 4vw;} }
@@ -190,6 +190,8 @@ nav.links a:hover{opacity:1; color:var(--gold-light);}
 .svc-body h3{font-size:26px;}
 @media (min-width:768px){ .svc-body h3{font-size:34px;} }
 .svc-body p{color:rgba(255,255,255,0.90); margin-top:8px; max-width:520px;}
+.svc-more{display:inline-flex; margin-top:14px; font-weight:700; font-size:14.5px; color:var(--gold-light); transition:gap .2s var(--ease);}
+.svc-card:hover .svc-more{gap:6px;}
 .svc-dots{display:flex; justify-content:center; gap:10px; padding:22px 0 0;}
 @media (max-width:767px){ .svc-dots{display:none;} }
 .svc-dots span{height:8px; width:8px; border-radius:99px; background:rgba(255,255,255,0.35); transition:width .3s, background .3s;}
