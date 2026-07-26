@@ -3,6 +3,16 @@
 
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  /* ---------- Not-yet-active contact placeholders ----------
+     These links (phone/WhatsApp/email not filled in yet) carry
+     aria-disabled + tabindex="-1", but browsers still navigate on
+     click/Enter unless we stop it here. */
+  document.querySelectorAll('[aria-disabled="true"]').forEach(function (el) {
+    el.addEventListener("click", function (e) {
+      e.preventDefault();
+    });
+  });
+
   /* ---------- Mobile nav ---------- */
   var burger = document.getElementById("burgerBtn");
   var navLinks = document.getElementById("navLinks");
