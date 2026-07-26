@@ -403,6 +403,8 @@ footer p.credit{color:var(--gold); font-size:14.5px; font-weight:600;}
 .page-header h1{color:var(--white); margin-top:14px; font-size:44px;}
 .page-header p{color:var(--muted-on-dark); margin-top:16px; max-width:620px; font-size:18px;}
 @media (max-width:768px){ .page-header h1{font-size:30px;} .page-header p{font-size:16px;} }
+.page-header-tall .container{padding-top:120px; padding-bottom:120px;}
+@media (max-width:768px){ .page-header-tall .container{padding-top:76px; padding-bottom:76px;} }
 nav.links a.active{color:var(--gold-light); opacity:1;}
 
 /* ---------- Static services grid (hub page) ---------- */
@@ -443,3 +445,38 @@ footer{ view-transition-name: site-footer; }
     animation: none !important;
   }
 }
+
+/* ---------- Generic image placeholder (content pending real photos) ---------- */
+.img-placeholder{
+  position:relative; width:100%; overflow:hidden;
+  background:linear-gradient(135deg, rgba(193,165,117,0.16), rgba(13,36,41,0.05));
+  border:1.5px dashed var(--line-on-light);
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px;
+  color:var(--muted-on-light); text-align:center; padding:12px;
+}
+.img-placeholder svg{opacity:0.4;}
+.img-placeholder span{font-size:12.5px; font-weight:600; opacity:0.75; max-width:80%;}
+
+/* ---------- Article teasers (self-authored SEO articles) ---------- */
+.article-teasers{display:grid; grid-template-columns:repeat(3,1fr); gap:26px;}
+@media (max-width:900px){ .article-teasers{grid-template-columns:1fr;} }
+.article-teaser{
+  display:block; border-radius:16px; overflow:hidden; background:var(--white);
+  box-shadow:var(--shadow); transition:transform .25s var(--ease), box-shadow .25s var(--ease);
+}
+.article-teaser:hover{transform:translateY(-4px); box-shadow:var(--shadow-lift);}
+.article-teaser-body{padding:22px 24px;}
+.article-teaser-body h3{margin-top:8px; font-size:19px; color:var(--ink-on-light);}
+.article-teaser-body p{margin-top:8px; font-size:14.5px; color:var(--muted-on-light);}
+.article-teaser-link{display:inline-flex; align-items:center; gap:6px; margin-top:14px; font-weight:700; font-size:14px; color:var(--bronze);}
+.article-teaser-link .arrow{display:inline-block; transition:transform .25s var(--ease);}
+.article-teaser:hover .article-teaser-link .arrow{transform:translateX(-4px);}
+
+/* ---------- Recommendation cards (placeholder testimonials grid) ---------- */
+.reco-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:28px;}
+@media (max-width:900px){ .reco-grid{grid-template-columns:1fr;} }
+.reco-card{padding:28px 26px; border-radius:16px; background:var(--cream); box-shadow:var(--shadow); text-align:center;}
+.reco-avatar{width:72px; height:72px; border-radius:50%; margin:0 auto;}
+.reco-stars{margin-top:16px; color:var(--gold); letter-spacing:2px;}
+.reco-card .quote{margin-top:10px; color:var(--muted-on-light); font-size:14.5px; font-style:italic;}
+.reco-name{margin-top:12px; font-weight:700; color:var(--ink-on-light); font-size:14px;}
