@@ -173,6 +173,17 @@ nav.links a:hover{opacity:1; color:var(--gold-light);}
 .about-body h3{color:var(--gold-light); margin-top:16px;}
 .about-body p{color:var(--muted-on-dark);}
 .quote-card{margin-top:30px; display:flex; gap:18px; align-items:flex-start; padding:26px 28px;}
+
+/* ---------- Press card (blog/articles page) ---------- */
+.press-card{
+  display:block; margin-top:24px; padding:28px 30px; border-radius:14px;
+  background:var(--cream); box-shadow:var(--shadow); transition:transform .2s var(--ease), box-shadow .2s var(--ease);
+}
+.press-card:hover{transform:translateY(-3px); box-shadow:var(--shadow-lift);}
+.press-source{font-size:13px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--bronze);}
+.press-card h3{margin-top:10px; font-size:22px; color:var(--ink-on-light);}
+.press-card p{margin-top:10px; color:var(--muted-on-light);}
+.press-link{display:inline-block; margin-top:16px; font-weight:700; color:var(--bronze);}
 .quote-mark{font-size:44px; font-weight:900; color:var(--gold); line-height:.6; font-family:Georgia,serif; flex:none;}
 .quote-card p{font-weight:500; font-size:18px; color:var(--ink-on-light);}
 .quote-card span{display:block; margin-top:12px; font-size:14px; color:var(--muted-on-light); font-weight:700;}
@@ -278,6 +289,27 @@ nav.links a:hover{opacity:1; color:var(--gold-light);}
 .pending-note .dot{width:7px; height:7px; border-radius:50%; background:var(--gold); flex:none;}
 
 /* ---------- Banks (placeholder) ---------- */
+/* ---------- Google Reviews ---------- */
+.reviews{background:var(--white);}
+.reviews-head{text-align:center; max-width:640px; margin:0 auto 36px;}
+.reviews-rating{display:flex; align-items:center; justify-content:center; gap:10px; margin-top:14px; flex-wrap:wrap;}
+.reviews-rating .stars{color:var(--gold); font-size:20px; letter-spacing:2px;}
+.reviews-note{font-size:13px; color:var(--muted-on-light); width:100%; margin-top:4px;}
+.reviews-scroller{display:flex; gap:20px; overflow-x:auto; padding:6px 4px 10px; scroll-snap-type:x proximity;}
+.review-card{
+  flex:0 0 300px; scroll-snap-align:start; background:var(--cream); border-radius:14px;
+  padding:26px; box-shadow:var(--shadow);
+}
+.review-card.placeholder{border:1px dashed rgba(13,36,41,0.22); background:var(--white); box-shadow:none;}
+.review-top{display:flex; align-items:center; gap:12px; margin-bottom:14px;}
+.review-top .avatar{
+  width:40px; height:40px; border-radius:50%; background:rgba(193,165,117,0.18); color:var(--bronze);
+  display:flex; align-items:center; justify-content:center; font-weight:700; flex:none;
+}
+.review-name{font-weight:700; font-size:15px; color:var(--ink-on-light);}
+.review-stars{color:var(--gold); font-size:14px; letter-spacing:1px;}
+.review-text{color:var(--muted-on-light); font-size:14.5px; margin-top:2px;}
+
 .banks{background:var(--cream);}
 .banks-row{display:grid; grid-template-columns:repeat(7,1fr); gap:16px;}
 @media (max-width:900px){ .banks-row{grid-template-columns:repeat(4,1fr);} }
