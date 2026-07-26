@@ -79,7 +79,7 @@
           if (!entry.isIntersecting || started) return;
           started = true;
           obs.disconnect();
-          var duration = 1300;
+          var duration = 1800;
           var start = performance.now();
           function tick(now) {
             var t = Math.min((now - start) / duration, 1);
@@ -89,7 +89,7 @@
           requestAnimationFrame(tick);
         });
       },
-      { threshold: 0.4 }
+      { threshold: 0.15 }
     );
     obs.observe(el);
   });
