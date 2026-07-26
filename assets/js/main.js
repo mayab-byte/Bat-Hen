@@ -20,7 +20,7 @@
   }
 
   /* ---------- Scroll reveal ---------- */
-  var revealEls = document.querySelectorAll(".reveal-up, .reveal-down");
+  var revealEls = document.querySelectorAll(".reveal-up, .reveal-down, .reveal-pop");
   if ("IntersectionObserver" in window && !reduceMotion) {
     var io = new IntersectionObserver(
       function (entries) {
@@ -124,7 +124,7 @@
       var rect = wrap.getBoundingClientRect();
       var p = Math.min(1, Math.max(0, -rect.top / Math.max(1, scrollable)));
       var cardWidth = sticky.offsetWidth;
-      track.style.transform = "translateX(-" + p * (count - 1) * cardWidth + "px)";
+      track.style.transform = "translateX(" + p * (count - 1) * cardWidth + "px)";
       setDots(Math.round(p * (count - 1)));
     }
 
@@ -256,4 +256,42 @@
 
   sync();
   pointerMQ.addEventListener("change", sync);
+})();
+
+/* ---------- Scroll-scrubbed numbers video (banks section background) ----------
+   The video never plays on its own; instead its currentTime is driven directly
+   by how far the section has scrolled through the viewport, so it reads as a
+   sequence of frames tied to the scroll rather than a looping clip. */
+(function () {
+  var section = document.getElementById("banks");
+  if (!section) return;
+  var video = section.querySelector(".banks-bg-video");
+  if (!video) return;
+
+  var duration = video.duration || 0;
+  video.addEventListener("loadedmetadata", function () {
+    duration = video.duration || 0;
+    update();
+  });
+
+  var raf = 0;
+  function update() {
+    raf = 0;
+    if (!duration) duration = video.duration || 0;
+    if (!duration) return;
+    var rect = section.getBoundingClientRect();
+    var vh = window.innerHeight || document.documentElement.clientHeight;
+    var total = rect.height + vh;
+    var p = Math.min(1, Math.max(0, (vh - rect.top) / total));
+    try {
+      video.currentTime = p * duration;
+    } catch (e) {}
+  }
+  function onScroll() {
+    if (!raf) raf = requestAnimationFrame(update);
+  }
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll);
+  update();
 })();
