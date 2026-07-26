@@ -39,8 +39,12 @@
 <main id="main">
 
 <section class="hero" id="top">
-  <img class="hero-bg" src="assets/images/hero-bg.jpg" alt="" aria-hidden="true">
+  <video class="hero-bg" autoplay muted loop playsinline preload="auto" poster="assets/images/hero-bg.jpg" aria-hidden="true">
+    <source src="assets/video/hero-wave.mp4" type="video/mp4">
+    <source src="assets/video/hero-wave.webm" type="video/webm">
+  </video>
   <div class="hero-overlay" aria-hidden="true"></div>
+  <canvas id="waveCanvas" class="hero-wave-canvas" aria-hidden="true"></canvas>
   <div class="hero-portrait reveal-up d2" aria-hidden="true">
     <img src="assets/images/batchen-portrait.png" alt="">
   </div>

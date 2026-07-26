@@ -137,3 +137,123 @@
     update();
   }
 })();
+
+/* ---------- Golden Wave Interactive (hero canvas) ----------
+   A few flowing sine-based gold strands drift continuously (the "infinite"
+   loop), and bend toward the cursor within a radius like a soft magnet -
+   only on devices with a real mouse (hover:hover + pointer:fine); touch
+   devices just get the looping video background, no canvas overhead. */
+(function () {
+  var canvas = document.getElementById("waveCanvas");
+  if (!canvas) return;
+  var hero = canvas.closest(".hero");
+  if (!hero) return;
+
+  var pointerMQ = window.matchMedia("(hover: hover) and (pointer: fine)");
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var ctx = canvas.getContext("2d");
+  var W = 0, H = 0, DPR = 1;
+  var rafId = null;
+
+  function resize() {
+    DPR = Math.min(window.devicePixelRatio || 1, 2);
+    W = hero.offsetWidth;
+    H = hero.offsetHeight;
+    canvas.width = Math.round(W * DPR);
+    canvas.height = Math.round(H * DPR);
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  }
+
+  var mouse = { x: -9999, y: -9999 };
+  var mouseTarget = { x: -9999, y: -9999 };
+
+  function onMove(e) {
+    var rect = hero.getBoundingClientRect();
+    mouseTarget.x = e.clientX - rect.left;
+    mouseTarget.y = e.clientY - rect.top;
+  }
+  function onLeave() {
+    mouseTarget.x = -9999;
+    mouseTarget.y = -9999;
+  }
+
+  var STRANDS = [
+    { amp: 42, freq: 1.25, speed: 0.32, baseY: 0.40, width: 2.2, alpha: 0.5 },
+    { amp: 56, freq: 1.0, speed: 0.20, baseY: 0.5, width: 1.6, alpha: 0.32 },
+    { amp: 30, freq: 1.55, speed: 0.46, baseY: 0.6, width: 1.2, alpha: 0.26 },
+  ];
+  var COLORS = ["#DBC292", "#C1A575", "#F2E2C2"];
+  var N = 46;
+  var t = 0;
+  var pullRadius = 220;
+
+  function frame() {
+    ctx.clearRect(0, 0, W, H);
+    mouse.x += (mouseTarget.x - mouse.x) * 0.08;
+    mouse.y += (mouseTarget.y - mouse.y) * 0.08;
+
+    STRANDS.forEach(function (s, si) {
+      ctx.beginPath();
+      for (var i = 0; i <= N; i++) {
+        var px = (i / N) * W;
+        var py = s.baseY * H + Math.sin((i / N) * Math.PI * 2 * s.freq + t * s.speed) * s.amp;
+
+        var dx = px - mouse.x;
+        var dy = py - mouse.y;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < pullRadius) {
+          var pull = 1 - dist / pullRadius;
+          pull *= pull;
+          py += (mouse.y - py) * pull * 0.55;
+          px += (mouse.x - px) * pull * 0.12;
+        }
+
+        if (i === 0) ctx.moveTo(px, py);
+        else ctx.lineTo(px, py);
+      }
+      ctx.strokeStyle = COLORS[si % COLORS.length];
+      ctx.globalAlpha = s.alpha;
+      ctx.lineWidth = s.width;
+      ctx.shadowColor = COLORS[si % COLORS.length];
+      ctx.shadowBlur = 8;
+      ctx.stroke();
+    });
+    ctx.globalAlpha = 1;
+
+    t += 0.016;
+    rafId = requestAnimationFrame(frame);
+  }
+
+  function start() {
+    if (rafId) return;
+    resize();
+    hero.addEventListener("mousemove", onMove);
+    hero.addEventListener("mouseleave", onLeave);
+    window.addEventListener("resize", resize);
+    if (reduceMotion) {
+      frame();
+      cancelAnimationFrame(rafId);
+      rafId = null;
+    } else {
+      frame();
+    }
+  }
+
+  function stop() {
+    if (rafId) {
+      cancelAnimationFrame(rafId);
+      rafId = null;
+    }
+    hero.removeEventListener("mousemove", onMove);
+    hero.removeEventListener("mouseleave", onLeave);
+    ctx.clearRect(0, 0, W, H);
+  }
+
+  function sync() {
+    if (pointerMQ.matches) start();
+    else stop();
+  }
+
+  sync();
+  pointerMQ.addEventListener("change", sync);
+})();
