@@ -190,10 +190,10 @@ nav.links a:hover{opacity:1; color:var(--gold-light);}
 
 /* ---------- Why-choose callout (used before services, mirrors Keystone's insight box) ---------- */
 .insight{background:var(--cream); padding-top:60px;}
-.insight-box{max-width:800px; margin:0 auto; padding:38px 40px; text-align:center;}
+.insight-box{max-width:800px; margin:0 auto; padding:40px; text-align:center;}
 .insight-box p{color:var(--muted-on-light); font-size:18px;}
 .insight-box strong{color:var(--bronze);}
-.insight-cta{margin-top:26px; padding-top:24px; border-top:1px solid var(--line-on-light); text-align:center;}
+.insight-cta{margin-top:28px; padding-top:28px; border-top:1px solid var(--line-on-light); text-align:center;}
 
 /* ---------- Services rail ---------- */
 .services{background:var(--dark); color:var(--cream); padding-top:70px; padding-bottom:0;}
@@ -256,7 +256,7 @@ nav.links a:hover{opacity:1; color:var(--gold-light);}
 .reason p{color:var(--muted-on-dark); font-size:15px; margin-top:8px;}
 
 /* ---------- Numbers ---------- */
-.numbers{background:var(--white); padding-top:64px; padding-bottom:64px; border-top:1px solid var(--line-on-light);}
+.numbers{background:#F3F7F4; padding-top:64px; padding-bottom:64px; border-top:1px solid var(--line-on-light);}
 .stats-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:24px; text-align:center;}
 @media (max-width:760px){ .stats-grid{grid-template-columns:repeat(2,1fr); gap:36px;} }
 .stat-num{font-size:44px; font-weight:900; font-variant-numeric:tabular-nums; background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent;}

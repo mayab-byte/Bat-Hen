@@ -69,7 +69,7 @@
           if (!entry.isIntersecting || started) return;
           started = true;
           obs.disconnect();
-          var duration = 2600;
+          var duration = 1300;
           var start = performance.now();
           function tick(now) {
             var t = Math.min((now - start) / duration, 1);
