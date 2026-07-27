@@ -63,6 +63,33 @@
     });
   });
 
+  /* ---------- Service card videos ----------
+     Mobile browsers don't always honor the autoplay attribute for
+     off-screen video (some hold off loading/playing until the element
+     is actually visible). Load + play explicitly once each card
+     scrolls into view. */
+  var svcVideos = document.querySelectorAll(".svc-grid-card video");
+  if (svcVideos.length && "IntersectionObserver" in window) {
+    var svcIo = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          var v = entry.target;
+          if (entry.isIntersecting) {
+            if (v.preload !== "auto") v.preload = "auto";
+            var playPromise = v.play();
+            if (playPromise && playPromise.catch) playPromise.catch(function () {});
+          } else {
+            v.pause();
+          }
+        });
+      },
+      { threshold: 0.25 }
+    );
+    svcVideos.forEach(function (v) {
+      svcIo.observe(v);
+    });
+  }
+
   /* ---------- Scroll reveal ---------- */
   var revealEls = document.querySelectorAll(".reveal-up, .reveal-down, .reveal-pop");
   if ("IntersectionObserver" in window && !reduceMotion) {
