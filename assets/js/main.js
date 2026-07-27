@@ -29,6 +29,40 @@
     });
   }
 
+  /* ---------- Reviews carousel arrows ---------- */
+  document.querySelectorAll(".reviews-carousel").forEach(function (carousel) {
+    var scroller = carousel.querySelector(".reviews-scroller");
+    var prevBtn = carousel.querySelector(".carousel-arrow.prev");
+    var nextBtn = carousel.querySelector(".carousel-arrow.next");
+    if (!scroller || !prevBtn || !nextBtn) return;
+    var cards = Array.prototype.slice.call(scroller.children);
+
+    function currentIndex() {
+      var scrollerRect = scroller.getBoundingClientRect();
+      var best = 0, bestDist = Infinity;
+      cards.forEach(function (card, i) {
+        var dist = Math.abs(card.getBoundingClientRect().right - scrollerRect.right);
+        if (dist < bestDist) {
+          bestDist = dist;
+          best = i;
+        }
+      });
+      return best;
+    }
+
+    function goTo(i) {
+      i = Math.max(0, Math.min(cards.length - 1, i));
+      cards[i].scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", inline: "start", block: "nearest" });
+    }
+
+    nextBtn.addEventListener("click", function () {
+      goTo(currentIndex() + 1);
+    });
+    prevBtn.addEventListener("click", function () {
+      goTo(currentIndex() - 1);
+    });
+  });
+
   /* ---------- Scroll reveal ---------- */
   var revealEls = document.querySelectorAll(".reveal-up, .reveal-down, .reveal-pop");
   if ("IntersectionObserver" in window && !reduceMotion) {
