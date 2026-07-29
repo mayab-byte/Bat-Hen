@@ -412,8 +412,10 @@ nav.links a:hover{color:var(--gold-light);}
 .contact-intro h3{color:var(--gold-light); margin-top:16px;}
 .contact-intro p{color:var(--white); font-size:18px; margin-top:12px;}
 .contact-channels{margin-top:28px; display:flex; flex-direction:column; gap:14px;}
-.contact-channel{display:flex; align-items:center; gap:14px; color:var(--white); font-size:18px; font-weight:600;}
-.contact-channel .ci{display:flex; align-items:center; justify-content:center; width:44px; height:44px; border-radius:50%; border:1px solid var(--line-on-dark); flex:none;}
+.contact-channel{display:flex; align-items:center; gap:14px; color:var(--white); font-size:18px; font-weight:600; transition:color .2s var(--ease);}
+.contact-channel:hover{color:var(--gold-light);}
+.contact-channel .ci{display:flex; align-items:center; justify-content:center; width:44px; height:44px; border-radius:50%; border:1px solid var(--line-on-dark); flex:none; transition:border-color .2s var(--ease), background .2s var(--ease);}
+.contact-channel:hover .ci{border-color:var(--gold-light); background:rgba(193,165,117,0.12);}
 form.card-on-dark{display:flex; flex-direction:column; gap:16px;}
 .field{display:flex; flex-direction:column; gap:8px;}
 .field label{font-size:18px; font-weight:700; color:var(--white);}
