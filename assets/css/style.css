@@ -133,9 +133,9 @@ nav.links a:hover{color:var(--gold-light);}
 @media (hover:hover) and (pointer:fine){ .hero-wave-canvas{display:block;} }
 .hero .container{position:relative; z-index:2; width:100%; padding-top:64px; padding-bottom:64px;}
 .hero-inner{max-width:740px;}
-.hero-portrait{position:absolute; z-index:1; bottom:3%; left:2%; height:76%; display:flex; align-items:flex-end; pointer-events:none;}
+.hero-portrait{position:absolute; z-index:1; bottom:3%; left:0; width:50%; height:76%; display:flex; align-items:flex-end; justify-content:center; pointer-events:none;}
 .hero-portrait::before{
-  content:""; position:absolute; bottom:8%; right:-10%; width:85%; aspect-ratio:1; border-radius:50%;
+  content:""; position:absolute; bottom:8%; left:50%; transform:translateX(-50%); width:42%; aspect-ratio:1; border-radius:50%;
   background:radial-gradient(circle, rgba(193,165,117,0.30), rgba(193,165,117,0) 68%);
 }
 .hero-portrait img{position:relative; height:100%; width:auto; filter:drop-shadow(0 0 22px rgba(13,36,41,0.85)) drop-shadow(0 0 44px rgba(13,36,41,0.6)) drop-shadow(0 30px 40px rgba(0,0,0,0.45));}
@@ -143,7 +143,7 @@ nav.links a:hover{color:var(--gold-light);}
 @media (max-width:900px){
   .hero{flex-direction:column; padding-top:36px;}
   .hero-portrait{
-    position:static; height:auto; order:2; margin:24px 0 0; justify-content:center; width:100%;
+    position:static; height:auto; order:2; margin:24px 0 0; justify-content:center; width:100%; transform:none;
   }
   .hero-portrait::before{display:none;}
   .hero-portrait img{height:auto; width:100%; display:block; filter:none;}
