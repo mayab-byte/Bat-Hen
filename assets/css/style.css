@@ -62,6 +62,8 @@ button{font-family:inherit;}
 .page-header .label, .hero .label, .services .section-head .label, .contact-intro .label{
   color:var(--white); font-size:18px;
 }
+.hero-inner .label{color:var(--gold); font-size:23px; display:block; text-align:center;}
+@media (max-width:768px){ .hero-inner .label{font-size:19px;} }
 h1,h2,h3,h4{ margin:0; text-wrap:balance; }
 h1{font-size:54px; font-weight:900; line-height:1.15;}
 h2{font-size:40px; font-weight:900; line-height:1.2;}
@@ -451,15 +453,15 @@ footer p.credit{color:var(--white); font-size:18px; font-weight:600;}
 :focus-visible{outline:2px solid var(--gold); outline-offset:2px;}
 
 /* ---------- Sub-page header band ---------- */
-.page-header{position:relative; overflow:hidden; background:var(--dark); color:var(--cream); padding-top:56px;}
+.page-header{position:relative; overflow:hidden; background:var(--dark); color:var(--cream); padding-top:56px; display:flex; align-items:flex-end;}
 .page-header-bg{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;}
 .page-header-overlay{position:absolute; inset:0; background:linear-gradient(100deg, rgba(7,22,25,0.94) 15%, rgba(13,36,41,0.72) 100%);}
-.page-header .container{position:relative; z-index:2; padding-top:48px; padding-bottom:48px;}
+.page-header .container{position:relative; z-index:2; width:100%; padding-top:28px; padding-bottom:36px;}
 .page-header h1{color:var(--white); margin-top:14px; font-size:44px;}
 .page-header p{color:var(--white); margin-top:16px; max-width:620px; font-size:18px;}
 @media (max-width:768px){ .page-header h1{font-size:30px;} .page-header p{font-size:18px;} }
-.page-header-tall .container{padding-top:120px; padding-bottom:120px;}
-@media (max-width:768px){ .page-header-tall .container{padding-top:76px; padding-bottom:76px;} }
+.page-header-tall{min-height:46vh;}
+@media (max-width:768px){ .page-header-tall{min-height:38vh;} }
 nav.links a.active{color:var(--gold-light); opacity:1;}
 
 /* ---------- Static services grid (hub page) ---------- */
@@ -480,8 +482,7 @@ nav.links a.active{color:var(--gold-light); opacity:1;}
 .sub-services li{display:flex; gap:10px; align-items:flex-start;}
 .sub-services .tick{flex:none; width:20px; height:20px; border-radius:50%; background:rgba(193,165,117,0.14); color:var(--bronze); display:flex; align-items:center; justify-content:center; margin-top:3px;}
 .sub-services .tick svg{width:11px; height:11px;}
-.sub-services .sub-title{color:var(--ink-on-light); font-weight:600; font-size:16px;}
-.sub-services .sub-desc{margin-top:2px; color:var(--muted-on-light); font-size:14px;}
+.sub-services .sub-title{color:var(--ink-on-light); font-weight:600; font-size:16.5px;}
 
 /* ---------- Cross-page navigation (native View Transitions, MPA) ----------
    Chrome/Edge 111+, Safari 18+, Firefox 129+ crossfade automatically between
@@ -546,3 +547,17 @@ footer{ view-transition-name: site-footer; }
 
 /* ---------- Accessibility: not-yet-active contact placeholders ---------- */
 [aria-disabled="true"]{opacity:0.6; cursor:not-allowed;}
+
+/* ---------- Article structure: reading time, TOC, callouts, mid-article CTA ---------- */
+.article-meta{display:flex; align-items:center; gap:8px; margin-top:18px; font-size:14px; color:var(--muted-on-light);}
+.article-meta svg{flex:none; color:var(--bronze-ink);}
+.article-toc{margin-top:30px; padding:22px 26px; border-radius:16px; background:var(--cream); border:1px solid var(--line-on-light);}
+.article-toc h2{font-size:16px; font-weight:700; color:var(--ink-on-light); margin:0;}
+.article-toc ol{margin:14px 0 0; padding-inline-start:22px; display:grid; gap:8px;}
+.article-toc a{color:var(--bronze-ink); font-weight:500; font-size:15px;}
+.article-callout{margin:26px 0; padding:20px 24px; border-radius:14px; background:rgba(193,165,117,0.1); border-inline-start:4px solid var(--gold);}
+.article-callout .cal-label{display:block; font-size:12.5px; font-weight:700; letter-spacing:.8px; color:var(--bronze-ink); text-transform:uppercase; margin-bottom:6px;}
+.article-callout p{color:var(--ink-on-light); font-size:16px; margin:0;}
+.article-cta{margin:34px 0; padding:26px 28px; border-radius:16px; background:var(--dark); display:flex; align-items:center; justify-content:space-between; gap:18px; flex-wrap:wrap;}
+.article-cta p{color:var(--white); font-size:17px; margin:0; flex:1; min-width:200px;}
+@media (max-width:600px){ .article-cta{padding:22px;} }
