@@ -29,6 +29,17 @@
     });
   }
 
+  /* ---------- Header services dropdown ---------- */
+  document.querySelectorAll(".dropdown-toggle").forEach(function (btn) {
+    btn.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var item = btn.closest(".nav-item");
+      var isOpen = item.classList.toggle("open");
+      btn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    });
+  });
+
   /* ---------- Reviews carousel arrows ---------- */
   document.querySelectorAll(".reviews-carousel").forEach(function (carousel) {
     var scroller = carousel.querySelector(".reviews-scroller");
