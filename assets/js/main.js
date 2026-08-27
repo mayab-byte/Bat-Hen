@@ -49,32 +49,68 @@
      the carousel doesn't scroll natively at all: .reviews-scroller
      is a plain overflow:hidden viewport, and .reviews-track (its flex
      child holding the cards) is moved purely via CSS transform, driven
-     by JS for both the arrow buttons and pointer-drag/swipe. */
+     by JS for both the arrow buttons and pointer-drag/swipe.
+
+     Infinite loop: the real cards are cloned once before and once
+     after themselves (aria-hidden, so screen readers only ever see
+     the real set), giving three copies back to back. The visible
+     window starts on the middle (real) copy. Once a transition or
+     drag lands on a cloned copy, we silently snap - no animation -
+     back by exactly one set-width to the equivalent spot in the real
+     copy. Because the clone looks pixel-identical to the real card it
+     stands in for, that snap is invisible, so next/prev/drag can be
+     repeated forever in either direction. */
   document.querySelectorAll(".reviews-carousel").forEach(function (carousel) {
     var scroller = carousel.querySelector(".reviews-scroller");
     var track = carousel.querySelector(".reviews-track");
     var prevBtn = carousel.querySelector(".carousel-arrow.prev");
     var nextBtn = carousel.querySelector(".carousel-arrow.next");
     if (!scroller || !track || !prevBtn || !nextBtn) return;
-    var cards = Array.prototype.slice.call(track.children);
-    if (!cards.length) return;
+    var originals = Array.prototype.slice.call(track.children);
+    if (originals.length < 2) return;
+
+    [-1, 1].forEach(function (dir) {
+      originals.forEach(function (card) {
+        var clone = card.cloneNode(true);
+        clone.setAttribute("aria-hidden", "true");
+        if (dir === -1) track.insertBefore(clone, track.firstChild);
+        else track.appendChild(clone);
+      });
+    });
 
     var pos = 0;
     var dragging = false, dragStartX = 0, dragStartPos = 0, pointerId = null, dragMoved = false;
 
     function step() {
       var gap = parseFloat(getComputedStyle(track).columnGap) || 20;
-      return cards[0].getBoundingClientRect().width + gap;
+      return originals[0].getBoundingClientRect().width + gap;
     }
 
-    function maxPos() {
-      return Math.max(0, track.scrollWidth - scroller.clientWidth);
+    function setWidth() {
+      return originals.length * step();
     }
 
     function setPos(v, animate) {
-      pos = Math.max(0, Math.min(maxPos(), v));
+      pos = v;
       track.style.transition = animate === false || reduceMotion ? "none" : "";
       track.style.transform = "translateX(" + pos + "px)";
+    }
+
+    /* After the visible move settles, pull pos back into the middle
+       (real-card) copy if it has drifted into a cloned one. Normalizing
+       to the middle third [setW, 2*setW) - not [0, setW) - keeps a full
+       set-width of clone buffer on BOTH sides at all times, so the next
+       single click or drag can never run past the cloned content and
+       expose blank space before the following normalize() call fires. */
+    function normalize() {
+      var setW = setWidth();
+      while (pos >= 2 * setW) pos -= setW;
+      while (pos < setW) pos += setW;
+      track.style.transition = "none";
+      track.style.transform = "translateX(" + pos + "px)";
+      // Force layout so the transition is re-armed for the next move.
+      void track.offsetWidth;
+      track.style.transition = "";
     }
 
     /* Card 0 sits flush at the carousel's right edge (RTL start) at
@@ -87,6 +123,9 @@
     });
     prevBtn.addEventListener("click", function () {
       setPos(pos - step());
+    });
+    track.addEventListener("transitionend", function (e) {
+      if (e.propertyName === "transform" && !dragging) normalize();
     });
 
     track.addEventListener("pointerdown", function (e) {
@@ -110,7 +149,7 @@
       dragging = false;
       pointerId = null;
       track.classList.remove("dragging");
-      setPos(pos);
+      normalize();
     }
     track.addEventListener("pointerup", endDrag);
     track.addEventListener("pointercancel", endDrag);
@@ -119,7 +158,7 @@
       a.addEventListener("click", function (e) { if (dragMoved) e.preventDefault(); });
     });
 
-    setPos(0, false);
+    setPos(setWidth(), false);
     window.addEventListener("resize", function () { setPos(pos, false); });
   });
 
