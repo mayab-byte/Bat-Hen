@@ -41,36 +41,41 @@
   });
 
   /* ---------- Reviews carousel arrows ---------- */
+  /* RTL note: this scroller sits in a dir="rtl" document, where
+     scrollLeft runs from 0 (first/rightmost card) down to a negative
+     max (last/leftmost card) in every current browser (Chrome, Firefox,
+     Safari). We scroll it directly via scrollLeft math instead of
+     scrollIntoView({inline:"start"}) - Safari's RTL handling of that
+     API has historically been inconsistent, which broke navigation in
+     one direction while the other kept working. */
   document.querySelectorAll(".reviews-carousel").forEach(function (carousel) {
     var scroller = carousel.querySelector(".reviews-scroller");
     var prevBtn = carousel.querySelector(".carousel-arrow.prev");
     var nextBtn = carousel.querySelector(".carousel-arrow.next");
     if (!scroller || !prevBtn || !nextBtn) return;
     var cards = Array.prototype.slice.call(scroller.children);
+    if (!cards.length) return;
 
-    function currentIndex() {
-      var scrollerRect = scroller.getBoundingClientRect();
-      var best = 0, bestDist = Infinity;
-      cards.forEach(function (card, i) {
-        var dist = Math.abs(card.getBoundingClientRect().right - scrollerRect.right);
-        if (dist < bestDist) {
-          bestDist = dist;
-          best = i;
-        }
-      });
-      return best;
+    function step() {
+      var gap = parseFloat(getComputedStyle(scroller).columnGap) || 20;
+      return cards[0].getBoundingClientRect().width + gap;
     }
 
-    function goTo(i) {
-      i = Math.max(0, Math.min(cards.length - 1, i));
-      cards[i].scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", inline: "start", block: "nearest" });
+    function maxScroll() {
+      return Math.max(0, scroller.scrollWidth - scroller.clientWidth);
+    }
+
+    function scrollByStep(dir) {
+      var target = scroller.scrollLeft - dir * step();
+      target = Math.max(-maxScroll(), Math.min(0, target));
+      scroller.scrollTo({ left: target, behavior: reduceMotion ? "auto" : "smooth" });
     }
 
     nextBtn.addEventListener("click", function () {
-      goTo(currentIndex() + 1);
+      scrollByStep(1);
     });
     prevBtn.addEventListener("click", function () {
-      goTo(currentIndex() - 1);
+      scrollByStep(-1);
     });
   });
 

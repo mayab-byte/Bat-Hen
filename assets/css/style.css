@@ -135,7 +135,7 @@ nav.links a:hover{color:var(--gold-light);}
 @media (hover:hover) and (pointer:fine){ .hero-wave-canvas{display:block;} }
 .hero .container{position:relative; z-index:2; width:100%; padding-top:64px; padding-bottom:64px;}
 .hero-inner{max-width:740px;}
-.hero-portrait{position:absolute; z-index:1; bottom:3%; left:0; width:50%; height:76%; display:flex; align-items:flex-end; justify-content:center; pointer-events:none;}
+.hero-portrait{position:absolute; z-index:1; bottom:0; left:0; width:50%; height:76%; display:flex; align-items:flex-end; justify-content:center; pointer-events:none;}
 .hero-portrait::before{
   content:""; position:absolute; bottom:8%; left:50%; transform:translateX(-50%); width:42%; aspect-ratio:1; border-radius:50%;
   background:radial-gradient(circle, rgba(193,165,117,0.30), rgba(193,165,117,0) 68%);
