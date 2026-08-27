@@ -41,42 +41,86 @@
   });
 
   /* ---------- Reviews carousel arrows ---------- */
-  /* RTL note: this scroller sits in a dir="rtl" document, where
-     scrollLeft runs from 0 (first/rightmost card) down to a negative
-     max (last/leftmost card) in every current browser (Chrome, Firefox,
-     Safari). We scroll it directly via scrollLeft math instead of
-     scrollIntoView({inline:"start"}) - Safari's RTL handling of that
-     API has historically been inconsistent, which broke navigation in
-     one direction while the other kept working. */
+  /* RTL note: this carousel sits in a dir="rtl" document. Native
+     overflow-x scrolling of an RTL container has genuinely inconsistent
+     scrollLeft/scrollIntoView behavior across browsers (Safari in
+     particular), which kept breaking navigation in one direction no
+     matter how the scroll call was written. To sidestep that entirely,
+     the carousel doesn't scroll natively at all: .reviews-scroller
+     is a plain overflow:hidden viewport, and .reviews-track (its flex
+     child holding the cards) is moved purely via CSS transform, driven
+     by JS for both the arrow buttons and pointer-drag/swipe. */
   document.querySelectorAll(".reviews-carousel").forEach(function (carousel) {
     var scroller = carousel.querySelector(".reviews-scroller");
+    var track = carousel.querySelector(".reviews-track");
     var prevBtn = carousel.querySelector(".carousel-arrow.prev");
     var nextBtn = carousel.querySelector(".carousel-arrow.next");
-    if (!scroller || !prevBtn || !nextBtn) return;
-    var cards = Array.prototype.slice.call(scroller.children);
+    if (!scroller || !track || !prevBtn || !nextBtn) return;
+    var cards = Array.prototype.slice.call(track.children);
     if (!cards.length) return;
 
+    var pos = 0;
+    var dragging = false, dragStartX = 0, dragStartPos = 0, pointerId = null, dragMoved = false;
+
     function step() {
-      var gap = parseFloat(getComputedStyle(scroller).columnGap) || 20;
+      var gap = parseFloat(getComputedStyle(track).columnGap) || 20;
       return cards[0].getBoundingClientRect().width + gap;
     }
 
-    function maxScroll() {
-      return Math.max(0, scroller.scrollWidth - scroller.clientWidth);
+    function maxPos() {
+      return Math.max(0, track.scrollWidth - scroller.clientWidth);
     }
 
-    function scrollByStep(dir) {
-      var target = scroller.scrollLeft - dir * step();
-      target = Math.max(-maxScroll(), Math.min(0, target));
-      scroller.scrollTo({ left: target, behavior: reduceMotion ? "auto" : "smooth" });
+    function setPos(v, animate) {
+      pos = Math.max(0, Math.min(maxPos(), v));
+      track.style.transition = animate === false || reduceMotion ? "none" : "";
+      track.style.transform = "translateX(" + pos + "px)";
     }
 
+    /* Card 0 sits flush at the carousel's right edge (RTL start) at
+       pos=0, with later cards positioned further left, off the
+       visible edge. Advancing to a later card means pulling that
+       further-left content into view, which requires shifting the
+       track right - i.e. increasing pos - not decreasing it. */
     nextBtn.addEventListener("click", function () {
-      scrollByStep(1);
+      setPos(pos + step());
     });
     prevBtn.addEventListener("click", function () {
-      scrollByStep(-1);
+      setPos(pos - step());
     });
+
+    track.addEventListener("pointerdown", function (e) {
+      if (e.pointerType === "mouse" && e.button !== 0) return;
+      dragging = true;
+      dragMoved = false;
+      pointerId = e.pointerId;
+      dragStartX = e.clientX;
+      dragStartPos = pos;
+      track.classList.add("dragging");
+      track.setPointerCapture(pointerId);
+    });
+    track.addEventListener("pointermove", function (e) {
+      if (!dragging || e.pointerId !== pointerId) return;
+      var dx = e.clientX - dragStartX;
+      if (Math.abs(dx) > 3) dragMoved = true;
+      setPos(dragStartPos + dx, false);
+    });
+    function endDrag(e) {
+      if (!dragging || (pointerId !== null && e.pointerId !== pointerId)) return;
+      dragging = false;
+      pointerId = null;
+      track.classList.remove("dragging");
+      setPos(pos);
+    }
+    track.addEventListener("pointerup", endDrag);
+    track.addEventListener("pointercancel", endDrag);
+    track.addEventListener("dragstart", function (e) { e.preventDefault(); });
+    track.querySelectorAll("a").forEach(function (a) {
+      a.addEventListener("click", function (e) { if (dragMoved) e.preventDefault(); });
+    });
+
+    setPos(0, false);
+    window.addEventListener("resize", function () { setPos(pos, false); });
   });
 
   /* ---------- Service card videos ----------
