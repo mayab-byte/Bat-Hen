@@ -185,7 +185,7 @@ nav.links a:hover{color:var(--gold-light);}
   .about-overlay{display:none;}
   .about-photo .container{position:static; background:var(--dark); padding-top:36px; padding-bottom:56px; order:1;}
 }
-.about-body{max-width:620px; margin-right:auto;}
+.about-body{max-width:520px; margin-right:auto;}
 .about-body h2{color:var(--white); margin-top:8px;}
 .about-body h3{color:var(--gold-light); margin-top:16px;}
 .about-body p{color:var(--white); font-size:18px;}
