@@ -440,6 +440,8 @@ footer .foot-links{display:flex; flex-wrap:wrap; justify-content:center; gap:18p
 footer .foot-links a{font-size:18px; color:var(--white);}
 footer .foot-links a:hover{color:var(--gold-light); text-decoration:underline;}
 footer p.credit{color:var(--white); font-size:18px; font-weight:600;}
+footer p.credit a{color:var(--gold-light); text-decoration:underline; text-underline-offset:3px;}
+footer p.credit a:hover{color:var(--gold);}
 
 /* ---------- Floating WhatsApp + sticky mobile bar ---------- */
 .wa-float{position:fixed; bottom:24px; left:24px; z-index:200; width:58px; height:58px; border-radius:50%; background:#25D366; display:flex; align-items:center; justify-content:center; box-shadow:0 8px 22px rgba(0,0,0,0.3); transition:transform .15s;}
