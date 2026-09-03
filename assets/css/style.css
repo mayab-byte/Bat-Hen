@@ -48,6 +48,7 @@ body{
 img{max-width:100%; display:block;}
 a{color:inherit; text-decoration:none;}
 ul{list-style:none; margin:0; padding:0;}
+li{text-wrap:pretty;}
 section{position:relative;}
 button{font-family:inherit;}
 
@@ -69,7 +70,7 @@ h1{font-size:54px; font-weight:900; line-height:1.15;}
 h2{font-size:40px; font-weight:900; line-height:1.2;}
 h3{font-size:26px; font-weight:700; line-height:1.35;}
 h4{font-size:20px; font-weight:700; line-height:1.4;}
-p{font-size:17px; font-weight:300; line-height:1.75; margin:0;}
+p{font-size:17px; font-weight:300; line-height:1.75; margin:0; text-wrap:pretty;}
 @media (max-width:768px){
   h1{font-size:32px;} h2{font-size:27px;} h3{font-size:21px;} h4{font-size:18px;} p{font-size:16px;}
 }
@@ -185,7 +186,7 @@ nav.links a:hover{color:var(--gold-light);}
   .about-overlay{display:none;}
   .about-photo .container{position:static; background:var(--dark); padding-top:36px; padding-bottom:56px; order:1;}
 }
-.about-body{max-width:520px; margin-right:auto;}
+.about-body{max-width:620px; margin-right:auto;}
 .about-body h2{color:var(--white); margin-top:8px;}
 .about-body h3{color:var(--gold-light); margin-top:16px;}
 .about-body p{color:var(--white); font-size:18px;}
@@ -245,7 +246,6 @@ nav.links a:hover{color:var(--gold-light);}
 .quote-mark{font-size:44px; font-weight:900; color:var(--gold); line-height:.6; font-family:Georgia,serif; flex:none;}
 .quote-card p{font-weight:500; font-size:18px; color:var(--ink-on-light);}
 .quote-card span{display:block; margin-top:12px; font-size:14px; color:var(--muted-on-light); font-weight:700;}
-.quote-card div p:first-child::after{content:"\201C"; color:var(--gold); font-weight:900;}
 @media (max-width:768px){ .br-desktop{display:none;} }
 
 /* ---------- Why-choose callout (used before services, mirrors Keystone's insight box) ---------- */
@@ -410,7 +410,7 @@ nav.links a:hover{color:var(--gold-light);}
 .contact{background:var(--dark); color:var(--cream); overflow:hidden; position:relative;}
 .contact-topline{position:absolute; inset-inline:0; top:0; height:4px; background:var(--grad);}
 .contact-mark{position:absolute; bottom:-8%; left:-6%; width:44%; max-width:520px; opacity:0.10; pointer-events:none;}
-.contact-grid{position:relative; display:grid; grid-template-columns:1fr 1.15fr; gap:60px; align-items:start;}
+.contact-grid{position:relative; display:grid; grid-template-columns:1fr 1.15fr; gap:60px; align-items:center;}
 @media (max-width:900px){ .contact-grid{grid-template-columns:1fr; gap:38px;} }
 .contact h2{color:var(--white); margin-top:14px;}
 .contact-intro h3{color:var(--gold-light); margin-top:16px;}
