@@ -125,7 +125,8 @@ nav.links a:hover{color:var(--gold-light);}
   transition:background .2s var(--ease), border-color .2s var(--ease), color .2s var(--ease);
 }
 .social-links a:hover{background:rgba(193,165,117,0.14); border-color:var(--gold-light); color:var(--gold-light);}
-@media (max-width:900px){ .social-links-header{display:none;} }
+@media (max-width:900px){ .social-links-header{gap:6px;} .social-links-header a{width:34px; height:34px;} }
+@media (max-width:380px){ .social-links-header{display:none;} }
 .social-links-contact{margin-top:24px; gap:12px;}
 .social-links-contact a{width:44px; height:44px;}
 .burger{display:none; background:none; border:none; cursor:pointer; padding:6px;}
